@@ -1,29 +1,14 @@
-﻿int count = 0;
-int currentNumber = 1;
-
+﻿Console.Clear();
 Console.WriteLine("Pick what prime number you want");
 int pickedNumber = Convert.ToInt32(Console.ReadLine());
 
-while (count < pickedNumber){
-    if (isPrime(currentNumber)) {
-        count++;
-    }
-    currentNumber++;
-}
-currentNumber--;
+PrimeFinder.ProgressEvent += (count) => {
+    int percentage = (int)((double)count/ pickedNumber * 100.0);
+    Console.SetCursorPosition(0, 3);
+    Console.Write(percentage.ToString() + "%");
+};
 
-Console.WriteLine($"Result: {currentNumber}");
+int result = PrimeFinder.FindPrime(pickedNumber);
 
-bool isPrime(int number)
-{
-    if (number == 1) return false;
-    if (number == 2) return true;
+Console.WriteLine($"Result: {result}");
 
-    var limit = Math.Ceiling(Math.Sqrt(number));
-
-    for (int i = 2; i <= limit; ++i)
-        if (number % i == 0)
-            return false;
-    return true;
-
-}
